@@ -1,31 +1,35 @@
 # -----------------------------
-# Stage 1: Build the application
+# Build Stage
 # -----------------------------
-FROM amazoncorretto:21 AS builder
+FROM eclipse-temurin:26-jdk AS builder
 
 WORKDIR /app
 
-# Copy project files
-COPY . .
+# Copy Gradle wrapper and configuration
+COPY gradlew .
+COPY gradlew.bat .
+COPY gradle gradle
+COPY build.gradle .
+COPY settings.gradle .
 
-# Make Gradle Wrapper executable
+# Copy source
+COPY src src
+
+# Make wrapper executable
 RUN chmod +x gradlew
 
-# Build the application (skip tests)
-RUN ./gradlew clean build -x test --no-daemon
+# Build Spring Boot JAR
+RUN ./gradlew clean bootJar -x test --no-daemon
 
 # -----------------------------
-# Stage 2: Runtime image
+# Runtime Stage
 # -----------------------------
-FROM amazoncorretto:21
+FROM eclipse-temurin:26-jre
 
 WORKDIR /app
 
-# Copy the built JAR from the builder stage
-COPY --from=builder /app/build/libs/NexVitalsSupportBackend-0.0.1-SNAPSHOT.jar app.jar
+COPY --from=builder /app/build/libs/*.jar app.jar
 
-# Render provides PORT automatically
 EXPOSE 8080
 
-# Start the Spring Boot application
-CMD ["sh", "-c", "java -Dserver.port=$PORT -jar app.jar"]
+ENTRYPOINT ["sh", "-c", "java -Dserver.port=${PORT:-8080} -jar app.jar"]

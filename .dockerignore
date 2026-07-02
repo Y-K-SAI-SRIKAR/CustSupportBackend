@@ -1,6 +1,8 @@
+.gradle
+build
 .git
 .gitignore
-.gradle
-src
-*.md
-.DS_Store
+.vscode
+.idea
+*.iml
+README.md
