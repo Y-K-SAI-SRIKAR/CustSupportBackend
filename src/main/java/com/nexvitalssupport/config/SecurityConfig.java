@@ -19,9 +19,11 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(Arrays.asList(
-            "http://localhost:7777",
-            "http://localhost:3000",
-            "https://nexvitalssupportmicroservice.onrender.com"  // ✅ Allow agent microservice
+        		"https://support.nexvitals.in",
+        		"http://localhost:7777",
+        		"http://localhost:3000",
+        		"https://nexvitalssupportmicroservice.onrender.com",
+        		"http://localhost:8080"                              // 
         ));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
         configuration.setAllowedHeaders(Arrays.asList("*"));
