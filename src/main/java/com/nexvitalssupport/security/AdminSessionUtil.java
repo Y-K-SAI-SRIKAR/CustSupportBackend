@@ -23,30 +23,30 @@ public class AdminSessionUtil {
 		Date expiry = new Date(now.getTime() + EXPIRATION_TIME);
 
 		return Jwts.builder()
-				.subject(adminEmailId)
-				.issuedAt(now)
-				.expiration(expiry)
+				.setSubject(adminEmailId)
+				.setIssuedAt(now)
+				.setExpiration(expiry)
 				.signWith(getSigningKey())
 				.compact();
 	}
 
 	public String extractAdminEmailId(String token) {
-		Claims claims = Jwts.parser()
-				.verifyWith(getSigningKey())
+		Claims claims = Jwts.parserBuilder()
+				.setSigningKey(getSigningKey())
 				.build()
-				.parseSignedClaims(token)
-				.getPayload();
+				.parseClaimsJws(token)
+				.getBody();
 
 		return claims.getSubject();
 	}
 
 	public boolean isTokenValid(String token) {
 		try {
-			Claims claims = Jwts.parser()
-					.verifyWith(getSigningKey())
+			Claims claims = Jwts.parserBuilder()
+					.setSigningKey(getSigningKey())
 					.build()
-					.parseSignedClaims(token)
-					.getPayload();
+					.parseClaimsJws(token)
+					.getBody();
 
 			return claims.getExpiration().after(new Date());
 		} catch (Exception e) {

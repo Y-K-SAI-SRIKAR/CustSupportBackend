@@ -1,32 +1,36 @@
 package com.nexvitalssupport.mail;
 
+import com.nexvitalssupport.model.Update;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
-
-import jakarta.mail.MessagingException;
-import jakarta.mail.internet.MimeMessage;
 
 @Service
 public class MailService {
 
-	@Autowired
-	private JavaMailSender mailSender;
+    @Autowired
+    private MailDispatcher mailDispatcher;
 
-	public void sendHtmlMail(String toEmail, String subject, String htmlBody) {
-		try {
-			MimeMessage message = mailSender.createMimeMessage();
-			MimeMessageHelper helper = new MimeMessageHelper(message, true);
+    public void sendPasswordResetEmail(String email, String resetLink) {
+        mailDispatcher.sendPasswordResetMail(email, resetLink);
+    }
 
-			helper.setTo(toEmail);
-			helper.setSubject(subject);
-			helper.setText(htmlBody, true);
-			helper.setFrom("noreply.nexvitals@gmail.com");
+    public void sendWelcomeEmail(String email) {
+        mailDispatcher.sendSubscriberWelcomeMail(email);
+    }
 
-			mailSender.send(message);
-		} catch (MessagingException e) {
-			throw new RuntimeException("Failed to send mail to " + toEmail, e);
-		}
-	}
+    public void sendUpdateNotification(String subscriberEmail, Update update) {
+        mailDispatcher.sendUpdateNotificationMail(subscriberEmail, update);
+    }
+
+    public void sendGrievanceAck(String email, String category) {
+        mailDispatcher.sendGrievanceAckMail(email, category);
+    }
+
+    public void sendReviewAck(String email, String name) {
+        mailDispatcher.sendReviewAckMail(email, name);
+    }
+
+    public void sendSuggestionAck(String email, String name) {
+        mailDispatcher.sendSuggestionAckMail(email, name);
+    }
 }

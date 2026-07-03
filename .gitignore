@@ -1,39 +1,58 @@
+# --- Build and Dependency Directories ---
 HELP.md
-.gradle
+.gradle/
 build/
+bin/
+out/
 
+# Keep the Gradle wrapper wrapper jar intact
 !gradle/wrapper/gradle-wrapper.jar
 
+# --- Sensitive Files & Credentials (CRITICAL) ---
+*.env
+*.local
+# Block specific local Google JSON secret files if they are still sitting in your directory
+src/main/resources/service-account-key.json
+src/main/resources/client_secret.json
 
-### STS ###
+# --- Application Configuration Overrides ---
+# Protects any local development profile configurations you might create later
+src/main/resources/application-local.properties
+src/main/resources/application-dev.properties
+
+# --- Logging & Runtime Junk ---
+*.log
+logs/
+*.swp
+*.bak
+.DS_Store
+Thumbs.db
+
+# --- STS (Spring Tool Suite) ---
 .apt_generated
 .classpath
 .factorypath
 .project
-.settings
+.settings/
 .springBeans
-.sts4-cache
-bin/
+.sts4-cache/
 !**/src/main/**/bin/
 !**/src/test/**/bin/
 
-### IntelliJ IDEA ###
-.idea
+# --- IntelliJ IDEA ---
+.idea/
 *.iws
 *.iml
 *.ipr
-out/
 !**/src/main/**/out/
 !**/src/test/**/out/
 
-### NetBeans ###
+# --- NetBeans ---
 /nbproject/private/
 /nbbuild/
 /dist/
 /nbdist/
 /.nb-gradle/
 
-### VS Code ###
+# --- VS Code ---
 .vscode/
-
-*.env

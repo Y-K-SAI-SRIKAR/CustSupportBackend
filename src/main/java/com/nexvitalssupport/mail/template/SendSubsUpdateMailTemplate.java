@@ -18,28 +18,33 @@ public class SendSubsUpdateMailTemplate {
 		
 		String htmlContent = "";
 		
-		switch(updateCategory.toLowerCase()) {
-			case "product-updates":
-				htmlContent = buildProductUpdateMail(updateTitle, versionNumber, whatChanged, whoItAffects);
-				break;
-			case "workflow-announcements":
-				htmlContent = buildWorkflowAnnouncementMail(protocolUpdate, effectiveFromDate, updateDescription);
-				break;
-			case "maintenance-notices":
-				htmlContent = buildMaintenanceNoticeMail(noticeTitle, startDateTime, endDateTime, details);
-				break;
-			case "partnership-network-expansion":
-				htmlContent = buildPartnershipMail(partnerTitle, partnerEffectiveFrom, partnerDescription);
-				break;
-			case "policy-compliance":
-				htmlContent = buildPolicyComplianceMail(policyTitle, policyEffectiveDate, policyDescription);
-				break;
-			case "internal-team-announcements":
-				htmlContent = buildTeamAnnouncementMail(achievementTitle, teamDescription);
-				break;
-			default:
-				htmlContent = buildGenericUpdateMail(updateTitle, updateDescription);
-				break;
+		// Handle null updateCategory safely
+		if (updateCategory == null || updateCategory.isEmpty()) {
+			htmlContent = buildGenericUpdateMail(updateTitle, updateDescription);
+		} else {
+			switch(updateCategory.toLowerCase()) {
+				case "product-updates":
+					htmlContent = buildProductUpdateMail(updateTitle, versionNumber, whatChanged, whoItAffects);
+					break;
+				case "workflow-announcements":
+					htmlContent = buildWorkflowAnnouncementMail(protocolUpdate, effectiveFromDate, updateDescription);
+					break;
+				case "maintenance-notices":
+					htmlContent = buildMaintenanceNoticeMail(noticeTitle, startDateTime, endDateTime, details);
+					break;
+				case "partnership-network-expansion":
+					htmlContent = buildPartnershipMail(partnerTitle, partnerEffectiveFrom, partnerDescription);
+					break;
+				case "policy-compliance":
+					htmlContent = buildPolicyComplianceMail(policyTitle, policyEffectiveDate, policyDescription);
+					break;
+				case "internal-team-announcements":
+					htmlContent = buildTeamAnnouncementMail(achievementTitle, teamDescription);
+					break;
+				default:
+					htmlContent = buildGenericUpdateMail(updateTitle, updateDescription);
+					break;
+			}
 		}
 		
 		return htmlContent;
@@ -67,7 +72,7 @@ public class SendSubsUpdateMailTemplate {
 	private String getFooterContent() {
 		return "        <div class=\"footer\">\n" +
 			"            <p><em>Smarter Vehicles. Faster Care. Safer Lives.</em></p>\n" +
-			"            Contact: nexvitalssupport@gmail.com</p>\n" +
+			"            <p>Contact: nexvitalssupport@gmail.com</p>\n" +
 			"        </div>\n";
 	}
 
