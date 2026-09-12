@@ -12,7 +12,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/query")
-@CrossOrigin(origins = {"http://localhost:7777", "http://localhost:3000"})
+@CrossOrigin(origins = {"http://localhost:7777", "http://localhost:3000","https://wave-point-support.vercel.app"})
 public class QueryController {
 
 	@Autowired
@@ -58,9 +58,9 @@ public class QueryController {
 	public ApiResponse<Boolean> checkAgentHealth() {
 		boolean isHealthy = agentClient.isAgentAvailable();
 		if (isHealthy) {
-			return new ApiResponse<>(true, "NexBot is available.", true);
+			return new ApiResponse<>(true, "WPBot is available.", true);
 		} else {
-			return new ApiResponse<>(false, "NexBot is currently unavailable.", false);
+			return new ApiResponse<>(false, "WPBot is currently unavailable.", false);
 		}
 	}
 }

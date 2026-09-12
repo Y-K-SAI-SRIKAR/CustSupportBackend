@@ -49,6 +49,7 @@ public class SecurityConfig {
                 .requestMatchers("/api/auth/forgot-password").permitAll()
                 .requestMatchers("/api/auth/reset-password").permitAll()
                 .requestMatchers("/api/auth/logout").permitAll()
+                .requestMatchers("/api/query/**").permitAll()
                 
                 // Public support endpoints
                 .requestMatchers("/api/myrequests/**").permitAll()
