@@ -23,7 +23,7 @@ public class SecurityConfig {
         		"http://localhost:3000",
         		"https://custsupmicroservice.onrender.com",
         		"http://localhost:8080",
-        		"https://wave-point-support.vercel.app/"// 
+        		"https://wave-point-support.vercel.app"// 
         ));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
         configuration.setAllowedHeaders(Arrays.asList("*"));
@@ -56,6 +56,7 @@ public class SecurityConfig {
                 .requestMatchers("/api/feedback/**").permitAll()
                 .requestMatchers("/api/updates/**").permitAll()
                 .requestMatchers("/api/support/**").permitAll()
+                .requestMatchers("/api/health").permitAll()
                 
                 // ✅ FIXED: Let requests reach the AdminController. 
                 // The AdminController manually handles the "Bearer" token validation.
