@@ -21,17 +21,36 @@ public class SuggestionService {
 	private MailDispatcher mailDispatcher;
 
 	public ApiResponse<Void> submitSuggestion(SuggestionRequest request) {
+	    try {
+	        Suggestion suggestion = new Suggestion();
 
-		Suggestion suggestion = new Suggestion();
-		suggestion.setSuggestorName(request.getName());
-		suggestion.setSuggestorEmailId(request.getEmailId());
-		suggestion.setSuggestion(request.getSuggestion());
-		suggestion.setSuggestedAt(LocalDateTime.now());
+	        suggestion.setSuggestorName(request.getName());
+	        suggestion.setSuggestorEmailId(request.getEmailId());
+	        suggestion.setSuggestion(request.getSuggestion());
+	        suggestion.setSuggestedAt(LocalDateTime.now());
 
-		suggestionRepository.save(suggestion);
+	        suggestionRepository.save(suggestion);
 
-		mailDispatcher.sendSuggestionAckMail(request.getEmailId(), request.getName());
+	        mailDispatcher.sendSuggestionAckMail(
+	            request.getEmailId(),
+	            request.getName()
+	        );
 
-		return new ApiResponse<>(true, "Thanks for your suggestion! We've sent you a confirmation mail.");
+	        return new ApiResponse<>(
+	            true,
+	            "Thanks for your suggestion! We've sent you a confirmation mail."
+	        );
+
+	    } catch (Exception e) {
+	        System.err.println(
+	            "Error submitting suggestion: " + e.getMessage()
+	        );
+	        e.printStackTrace();
+
+	        return new ApiResponse<>(
+	            false,
+	            "Unable to submit your suggestion. Please try again later."
+	        );
+	    }
 	}
 }

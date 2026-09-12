@@ -21,7 +21,6 @@ public class SecurityConfig {
         configuration.setAllowedOrigins(Arrays.asList(
         		"http://localhost:7777",
         		"http://localhost:3000",
-        		"https://custsupmicroservice.onrender.com",
         		"http://localhost:8080",
         		"https://wave-point-support.vercel.app"// 
         ));
@@ -51,12 +50,17 @@ public class SecurityConfig {
                 .requestMatchers("/api/auth/logout").permitAll()
                 .requestMatchers("/api/query/**").permitAll()
                 
-                // Public support endpoints
                 .requestMatchers("/api/myrequests/**").permitAll()
                 .requestMatchers("/api/ideas/**").permitAll()
                 .requestMatchers("/api/feedback/**").permitAll()
                 .requestMatchers("/api/updates/**").permitAll()
                 .requestMatchers("/api/support/**").permitAll()
+
+                // Public submission endpoints
+                .requestMatchers("/api/grievance/**").permitAll()
+                .requestMatchers("/api/suggestion/**").permitAll()
+                .requestMatchers("/api/review/**").permitAll()
+
                 .requestMatchers("/api/health").permitAll()
                 
                 // ✅ FIXED: Let requests reach the AdminController. 

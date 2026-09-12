@@ -21,25 +21,37 @@ public class GrievanceService {
     private MailDispatcher mailDispatcher;
 
     public ApiResponse<Void> submitGrievance(GrievanceRequest request) {
+        try {
+            Grievance grievance = new Grievance();
 
-        Grievance grievance = new Grievance();
+            grievance.setEmailId(request.getEmailId());
+            grievance.setClientID(request.getClientID());
+            grievance.setGrievanceCatagory(request.getGrievanceCatagory());
+            grievance.setComplaint(request.getComplaint());
+            grievance.setComplainedAt(LocalDateTime.now());
 
-        grievance.setEmailId(request.getEmailId());
-        grievance.setClientID(request.getClientID());
-        grievance.setGrievanceCatagory(request.getGrievanceCatagory());
-        grievance.setComplaint(request.getComplaint());
-        grievance.setComplainedAt(LocalDateTime.now());
+            grievanceRepository.save(grievance);
 
-        grievanceRepository.save(grievance);
+            mailDispatcher.sendGrievanceAckMail(
+                request.getEmailId(),
+                request.getGrievanceCatagory()
+            );
 
-        mailDispatcher.sendGrievanceAckMail(
-            request.getEmailId(),
-            request.getGrievanceCatagory()
-        );
+            return new ApiResponse<>(
+                true,
+                "Your support request has been submitted. We'll get back to you soon."
+            );
 
-        return new ApiResponse<>(
-            true,
-            "Your support request has been submitted. We'll get back to you soon."
-        );
+        } catch (Exception e) {
+            System.err.println(
+                "Error submitting support request: " + e.getMessage()
+            );
+            e.printStackTrace();
+
+            return new ApiResponse<>(
+                false,
+                "Unable to submit your support request. Please try again later."
+            );
+        }
     }
 }
