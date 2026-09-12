@@ -19,7 +19,6 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(Arrays.asList(
-        		"https://support.nexvitals.in",
         		"http://localhost:7777",
         		"http://localhost:3000",
         		"https://custsupmicroservice.onrender.com",

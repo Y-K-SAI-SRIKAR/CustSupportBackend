@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class NexVitalsSupportBackendApplication {
+public class CustomerSupportBackendApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(NexVitalsSupportBackendApplication.class, args);
+		SpringApplication.run(CustomerSupportBackendApplication.class, args);
 	}
 
 }

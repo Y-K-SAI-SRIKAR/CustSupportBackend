@@ -18,8 +18,7 @@ public class AgentClient {
 	private final ObjectMapper objectMapper = new ObjectMapper();
 
 	/**
-	 * Send message to NexBot ADK agent microservice
-	 * Endpoint: https://nexvitalssupportmicroservice.onrender.com/chat
+	 * Send message to WPBot ADK agent microservice
 	 */
 	public String sendMessage(String message, String sessionId) {
 

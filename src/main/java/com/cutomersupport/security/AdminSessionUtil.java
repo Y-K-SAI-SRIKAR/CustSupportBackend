@@ -11,7 +11,7 @@ import java.util.Date;
 @Component
 public class AdminSessionUtil {
 
-	private static final String SECRET_KEY = "NexVitalsSupportAdminSecretKeyForJWTSigning2026ChangeThisInProd";
+	private static final String SECRET_KEY = "WavePointSupportAdminSecretKeyForJWTSigning2026ChangeThisInProd";
 	private static final long EXPIRATION_TIME = 1000 * 60 * 60 * 2; // 2 hours
 
 	private SecretKey getSigningKey() {
